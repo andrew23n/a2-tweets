@@ -28,7 +28,16 @@ function parseTweets(runkeeper_tweets) {
 	const live = tweet_array.filter(function(tweet) { return tweet.source == 'completed_event'; }).length;
 	const achievements = tweet_array.filter(function(tweet) { return tweet.source == 'achievements'; }).length;
 	const miscellaneous = tweet_array.filter(function(tweet) { return tweet.source == 'miscellaneous'; }).length;
-	
+
+	document.querySelectorAll(".completedEvents").forEach(function(element) { element.innerText = completed; });
+	document.querySelectorAll(".liveEvents").forEach(function(element) { element.innerText = live; });
+	document.querySelectorAll(".achievements").forEach(function(element) { element.innerText = achievements; });
+	document.querySelectorAll(".miscellaneous").forEach(function(element) { element.innerText = miscellaneous; });
+
+	document.querySelectorAll(".completedEventsPct").forEach(function(element) { element.innerText = math.format((completed / total) * 100, {notation: 'fixed', precision: 2}) + '%'; });
+	document.querySelectorAll(".liveEventsPct").forEach(function(element) { element.innerText = math.format((live / total) * 100, {notation: 'fixed', precision: 2}) + '%'; });
+	document.querySelectorAll(".achievementsPct").forEach(function(element) { element.innerText = math.format((achievements / total) * 100, {notation: 'fixed', precision: 2}) + '%'; });
+	document.querySelectorAll(".miscellaneousPct").forEach(function(element) { element.innerText = math.format((miscellaneous / total) * 100, {notation: 'fixed', precision: 2}) + '%'; });
 }
 
 //Wait for the DOM to load
