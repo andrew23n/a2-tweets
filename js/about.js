@@ -23,6 +23,12 @@ function parseTweets(runkeeper_tweets) {
 	document.getElementById('lastDate').innerText = latest.toLocaleDateString('en-US', dateFormat);
 
 	// categories
+	const total = tweet_array.length;
+	const completed = tweet_array.filter(function(tweet) {return tweet.source == 'completed_event'; }).length;
+	const live = tweet_array.filter(function(tweet) { return tweet.source == 'completed_event'; }).length;
+	const achievements = tweet_array.filter(function(tweet) { return tweet.source == 'achievements'; }).length;
+	const miscellaneous = tweet_array.filter(function(tweet) { return tweet.source == 'miscellaneous'; }).length;
+	
 }
 
 //Wait for the DOM to load
