@@ -25,8 +25,8 @@ function parseTweets(runkeeper_tweets) {
 	// categories
 	const total = tweet_array.length;
 	const completed = tweet_array.filter(function(tweet) {return tweet.source == 'completed_event'; }).length;
-	const live = tweet_array.filter(function(tweet) { return tweet.source == 'completed_event'; }).length;
-	const achievements = tweet_array.filter(function(tweet) { return tweet.source == 'achievements'; }).length;
+	const live = tweet_array.filter(function(tweet) { return tweet.source == 'live_event'; }).length;
+	const achievements = tweet_array.filter(function(tweet) { return tweet.source == 'achievement'; }).length;
 	const miscellaneous = tweet_array.filter(function(tweet) { return tweet.source == 'miscellaneous'; }).length;
 
 	document.querySelectorAll(".completedEvents").forEach(function(element) { element.innerText = completed; });
