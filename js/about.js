@@ -12,6 +12,9 @@ function parseTweets(runkeeper_tweets) {
 	//This line modifies the DOM, searching for the tag with the numberTweets ID and updating the text.
 	//It works correctly, your task is to update the text of the other tags in the HTML file!
 	document.getElementById('numberTweets').innerText = tweet_array.length;	
+
+	const dateFormat = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+	const time = tweet_array.map(function(tweet) {return tweet.time.getTime(); });
 }
 
 //Wait for the DOM to load
