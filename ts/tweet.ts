@@ -26,14 +26,21 @@ class Tweet {
     //returns a boolean, whether the text includes any content written by the person tweeting.
     get written():boolean {
         //TODO: identify whether the tweet is written
-        return false;
+        return this.writtenText.length > 0;
     }
 
     get writtenText():string {
-        if(!this.written) {
+        if(this.source != 'completed_event') {
             return "";
         }
-        //TODO: parse the written text from the tweet
+        
+        let cleaned = this.text.replace(/#runkeep/gi, "");
+        cleaned = this.text.replace(/https?:\/\/\S+/g, "");
+        cleaned = this.text.replace(/\s+/g, " ");
+        cleaned = this.text.trim();
+
+        const match = cleaned.match();
+
         return "";
     }
 

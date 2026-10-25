@@ -13,7 +13,7 @@
 
 3. What online resources did you consult when completing this assignment? (list sites like StackOverflow or specific URLs for tutorials; describe queries to Generative AI or use of AI-based code completion)
 
-
+Used AI to parse through generated text by asking for the appropriate flags and to remove it.
 
 4. What classmates or other individuals did you consult as part of this assignment? What did you discuss?
 
