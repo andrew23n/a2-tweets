@@ -34,12 +34,13 @@ function parseTweets(runkeeper_tweets) {
 
 	const meanByType = {};
 	topThree.forEach(function(type) {
-		meanByType[type] = mean(distanceData.filer(function(row) { return row.activity == type; }).map(function(row) { return row.distance;}));
+		meanByType[type] = mean(distanceData.filter(function(row) { return row.activity == type; })
+			.map(function(row) { return row.distance;}));
 	});
 	const byLength = topThree.slice().sort(function(a,b) {return meanByType[b] - meanByType[a];});
 
 	document.getElementById('longestActivityType').innerText = byLength[0];
-	document.getElementById('shortestActivityType').innerText = byLength[byLength.length -1]
+	document.getElementById('shortestActivityType').innerText = byLength[byLength.length -1];
 
 	activity_vis_spec = {
 	  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
