@@ -38,6 +38,10 @@ function parseTweets(runkeeper_tweets) {
 	document.querySelectorAll(".liveEventsPct").forEach(function(element) { element.innerText = math.format((live / total) * 100, {notation: 'fixed', precision: 2}) + '%'; });
 	document.querySelectorAll(".achievementsPct").forEach(function(element) { element.innerText = math.format((achievements / total) * 100, {notation: 'fixed', precision: 2}) + '%'; });
 	document.querySelectorAll(".miscellaneousPct").forEach(function(element) { element.innerText = math.format((miscellaneous / total) * 100, {notation: 'fixed', precision: 2}) + '%'; });
+
+	const written = tweet_array.filter(function(tweet) { return tweet.source == 'completed_event' && tweet.written; }).length;
+	document.querySelectorAll(".written").forEach(function(element) { element.innerText = written; });
+	document.querySelectorAll(".writtenPct").forEach(function(element) { element.innerText = math.format((written / total) * 100, {notation: 'fixed', precision: 2}) + '%'; });
 }
 
 //Wait for the DOM to load
