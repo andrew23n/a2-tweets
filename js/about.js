@@ -29,11 +29,13 @@ function parseTweets(runkeeper_tweets) {
 	const achievements = tweet_array.filter(function(tweet) { return tweet.source == 'achievement'; }).length;
 	const miscellaneous = tweet_array.filter(function(tweet) { return tweet.source == 'miscellaneous'; }).length;
 
+	// set #'s
 	document.querySelectorAll(".completedEvents").forEach(function(element) { element.innerText = completed; });
 	document.querySelectorAll(".liveEvents").forEach(function(element) { element.innerText = live; });
 	document.querySelectorAll(".achievements").forEach(function(element) { element.innerText = achievements; });
 	document.querySelectorAll(".miscellaneous").forEach(function(element) { element.innerText = miscellaneous; });
 
+	// set %'s
 	document.querySelectorAll(".completedEventsPct").forEach(function(element) { element.innerText = math.format((completed / total) * 100, {notation: 'fixed', precision: 2}) + '%'; });
 	document.querySelectorAll(".liveEventsPct").forEach(function(element) { element.innerText = math.format((live / total) * 100, {notation: 'fixed', precision: 2}) + '%'; });
 	document.querySelectorAll(".achievementsPct").forEach(function(element) { element.innerText = math.format((achievements / total) * 100, {notation: 'fixed', precision: 2}) + '%'; });

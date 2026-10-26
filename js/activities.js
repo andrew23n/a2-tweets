@@ -12,11 +12,13 @@ function parseTweets(runkeeper_tweets) {
 	//TODO: create a new array or manipulate tweet_array to create a graph of the number of tweets containing each type of activity.
 	const completed = tweet_array.filter(function(tweet) { return tweet.source == 'completed_event' && tweet.activityType != 'unknown'; });
 
+	// map: key->type, value->count
 	const counts = {};
 	completed.forEach(function(tweet) {
 		counts[tweet.activityType] = (counts[tweet.activityType] || 0) + 1;
 	});
 
+	// sort by highest count. b-a results in descending order
 	const sortedTypes = Object.keys(counts).sort(function(a,b) { return counts[b] - counts[a];});
 	const topThree = sortedTypes.slice(0,3);
 
@@ -49,13 +51,14 @@ function parseTweets(runkeeper_tweets) {
 	document.getElementById('longestActivityType').innerText = byLength[0];
 	document.getElementById('shortestActivityType').innerText = byLength[byLength.length -1];
 
+	// compare weekends to weekdays
 	const isWeekend = function(row) {return row.day == 'Sat' || row.day == 'Sun';};
 	const weekendMean = mean(distanceData.filter(isWeekend).map(function(row) {return row.distance;}));
 	const weekDayMean = mean(distanceData.filter(function(row) {return !isWeekend(row);}).map(function(row) {return row.distance;}));
 
 	document.getElementById('weekdayOrWeekendLonger').innerText = weekendMean > weekDayMean ? 'weekends' : 'weekdays';
 
-
+	// graph 1
 	const activityCounts = sortedTypes.map(function(type) {
 		return {activity: type, count: counts[type]};
 	});
@@ -70,7 +73,7 @@ function parseTweets(runkeeper_tweets) {
 	  "encoding": {
 		"x": {"field": "activity", "type": "nominal", "sort": "-y", "title": "Activity type", "axis": {"labelAngle":-45}},
 		"y":{"field":"count","type":"quantitative","title":"Number of Tweets"},
-		"tooltip": [{"field":"activity", "title":"Activity"},{"field":"count","title":"Tweets"}]
+		"tooltip": [{"field":"activity", "title":"Activity"},{"field":"count","title":"Tweets"}] //when you hover over
 	  }
 	};
 	vegaEmbed('#activityVis', activity_vis_spec, {actions:false});
@@ -94,8 +97,10 @@ function parseTweets(runkeeper_tweets) {
 		});
 	});
 	
+	//encoding that graphs 2-3 will use
 	const xEncoding = {"field": "day", "type": "ordinal", "sort": DAYS_OF_WEEK, "title": "time (day)", "axis": {"grid": true, "labelAngle":0}};
 	const colorEncoding = {"field": "activity", "type": "nominal", "title": "Activity type"};
+	
 	// graph 2
 	distance_vis_spec = {
 	  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
@@ -131,7 +136,7 @@ function parseTweets(runkeeper_tweets) {
 	vegaEmbed('#distanceVis', distance_vis_spec, {actions:false});
 	vegaEmbed('#distanceVisAggregated', distance_vis_aggregated_spec, {actions:false});
  
-	// Alternate between the two plots when the button is pressed (start with all activities shown)
+	// alternate between the two plots when the button is pressed (start with all activities shown)
 	const distanceDiv = document.getElementById('distanceVis');
 	const aggregatedDiv = document.getElementById('distanceVisAggregated');
 	const button = document.getElementById('aggregate');

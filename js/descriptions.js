@@ -21,6 +21,7 @@ function addEventHandlerForSearch() {
 		const query = textFilter.value;
 		const needle = query.toLowerCase();
 
+		// when search is empty, everything else is empty
 		if(needle==='') {
 			table.innerHTML = '';
 			document.getElementById('searchCount').innerText = 0;
@@ -29,14 +30,17 @@ function addEventHandlerForSearch() {
 		}
 
 		const writtenTweets = window.tweet_array || [];
+		// searching mechanism
 		const matches = writtenTweets.filter(function(tweet) {
 			return tweet.writtenText.toLowerCase().includes(needle);
 		});
 
+		// update table
 		table.innerHTML = matches.map(function(tweet, index) {
 			return tweet.getHTMLTableRow(index + 1);
 		}).join('');
 
+		// update query text
 		document.getElementById('searchCount').innerText = matches.length;
 		document.getElementById('searchText').innerText = query;
 	});
