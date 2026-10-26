@@ -15,6 +15,8 @@
 
 Used AI to parse through generated text by asking for the appropriate flags and to remove it.
 
+Used AI to help determine the correct calculation for the mean of the graph in activities.
+
 4. What classmates or other individuals did you consult as part of this assignment? What did you discuss?
 
 

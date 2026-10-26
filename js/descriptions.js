@@ -6,6 +6,10 @@ function parseTweets(runkeeper_tweets) {
 	}
 
 	//TODO: Filter to just the written tweets
+	tweet_array = runkeeper_tweets.map(function(tweet) {return new Tweet(tweet.text, tweet.created_at);})
+			.filter(function(tweet) {return tweet.written;}
+	);
+	document.getElementById('textFilter').dispatchEvent(new Event('input'));
 }
 
 function addEventHandlerForSearch() {
