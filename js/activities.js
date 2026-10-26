@@ -49,6 +49,12 @@ function parseTweets(runkeeper_tweets) {
 	document.getElementById('longestActivityType').innerText = byLength[0];
 	document.getElementById('shortestActivityType').innerText = byLength[byLength.length -1];
 
+	const isWeekend = function(row) {return row.day == 'Sat' || row.day == 'Sun';};
+	const weekendMean = mean(distanceData.filter(isWeekend).map(function(row) {return row.distance;}));
+	const weekDayMean = mean(distanceData.filter(function(row) {return !isWeekend(row);}).map(function(row) {return row.distance;}));
+
+	document.getElementById('weekdayOrWeekendLonger').innerText = weekendMean > weekdayMean ? 'weekends' : 'weekdays';
+
 	activity_vis_spec = {
 	  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
 	  "description": "A graph of the number of Tweets containing each type of activity.",
