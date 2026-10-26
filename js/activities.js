@@ -10,7 +10,7 @@ function parseTweets(runkeeper_tweets) {
 	});
 
 	//TODO: create a new array or manipulate tweet_array to create a graph of the number of tweets containing each type of activity.
-	const completed = tweety_array.filter(function(tweet) { return tweet.source == 'completed_event' && tweet.activityType != 'unknown'; });
+	const completed = tweet_array.filter(function(tweet) { return tweet.source == 'completed_event' && tweet.activityType != 'unknown'; });
 
 	const counts = {};
 	completed.forEach(function(tweet) {

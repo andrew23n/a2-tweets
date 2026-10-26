@@ -69,7 +69,7 @@ class Tweet {
         }
         //TODO: parse the activity type from the text of the tweet
         const cleaned = this.text.replace(/#runkeeper/gi, "").replace(/https?:\/\/\S+/g, "").replace(/\s+/g, " ").trim();
-        const match = cleaned.match(/^(?:Just (?:completed|posted)|Completed) an? .+?(?: workout)?(?= in \d| with @?Runkeeper| - | -$| @|$)(.*)$/i);
+        const match = cleaned.match(/^(?:Just (?:completed|posted)|Completed) an? (?:\d+(?:\.\d+)?\s?(?:km|mi) )?(.+?)(?: workout)?(?= in \d| with @?Runkeeper| - | -$| @|$)/i);
         if (match === null) {
             return "unknown";
         }
