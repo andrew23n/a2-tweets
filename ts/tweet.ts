@@ -82,7 +82,15 @@ class Tweet {
             return 0;
         }
         //TODO: prase the distance from the text of the tweet
-        return 0;
+        const match = this.text.match(
+            /^(?:Just (?:completed|posted)|Completed) an? (\d+(?:\.\d+)?)\s?(km|mi) /i
+        );
+        if (match === null) {
+            return 0;
+        }
+        const value = parseFloat(match[1]);
+        // Convert kilometers to miles
+        return match[2].toLowerCase() == "km" ? value / 1.609 : value;
     }
 
     getHTMLTableRow(rowNumber:number):string {

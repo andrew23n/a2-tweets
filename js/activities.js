@@ -77,6 +77,69 @@ function parseTweets(runkeeper_tweets) {
 
 	//TODO: create the visualizations which group the three most-tweeted activities by the day of the week.
 	//Use those visualizations to answer the questions about which activities tended to be longest and when.
+	DAYS_OF_WEEK = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+	
+	const allRows = distanceData.map(function(row) {
+		return { activity: row.activity, day: row.day, distance: row.distance, kind: 'all', opacity: 0.7, size: 30 };
+	});
+	const meanRows = [];
+	topThree.forEach(function(type) {
+		DAYS_OF_WEEK.forEach(function(day) {
+			const distances = distanceData
+				.filter(function(row) { return row.activity == type && row.day == day; })
+				.map(function(row) { return row.distance; });
+			if (distances.length > 0) {
+				meanRows.push({ activity: type, day: day, distance: mean(distances), kind: 'mean', opacity: 1, size: 150 });
+			}
+		});
+	});
+	
+	const xEncoding = {"field": "day", "type": "ordinal", "sort": DAYS_OF_WEEK, "title": "time (day)"};
+	const colorEncoding = {"field": "activity", "type": "nominal", "title": "Activity type"};
+	// graph 2
+	distance_vis_spec = {
+	  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+	  "description": "Distance of each activity by day of the week.",
+	  "data": {
+	    "values": distanceData
+	  },
+	  "mark": "point",
+	  "encoding": {
+	    "x": xEncoding,
+	    "y": {"field": "distance", "type": "quantitative", "title": "distance"},
+	    "color": colorEncoding
+	  }
+	};
+ 
+	// graph 3
+	distance_vis_aggregated_spec = {
+	  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+	  "description": "Mean distance of each activity type by day of the week.",
+	  "data": {
+	    "values": distanceData
+	  },
+	  "mark": "point",
+	  "encoding": {
+	    "x": xEncoding,
+	    "y": {"aggregate": "mean", "field": "distance", "type": "quantitative", "title": "Mean of distance"},
+	    "color": colorEncoding
+	  }
+	};
+ 
+	vegaEmbed('#distanceVis', distance_vis_spec, {actions:false});
+	vegaEmbed('#distanceVisAggregated', distance_vis_aggregated_spec, {actions:false});
+ 
+	// Alternate between the two plots when the button is pressed (start with all activities shown)
+	const distanceDiv = document.getElementById('distanceVis');
+	const aggregatedDiv = document.getElementById('distanceVisAggregated');
+	const button = document.getElementById('aggregate');
+	aggregatedDiv.style.display = 'none';
+	button.addEventListener('click', function() {
+		const showingMeans = aggregatedDiv.style.display !== 'none';
+		distanceDiv.style.display = showingMeans ? '' : 'none';
+		aggregatedDiv.style.display = showingMeans ? 'none' : '';
+		button.innerText = showingMeans ? 'Show means' : 'Show all activities';
+	});
 }
 
 //Wait for the DOM to load
