@@ -94,7 +94,7 @@ function parseTweets(runkeeper_tweets) {
 		});
 	});
 	
-	const xEncoding = {"field": "day", "type": "ordinal", "sort": DAYS_OF_WEEK, "title": "time (day)"};
+	const xEncoding = {"field": "day", "type": "ordinal", "sort": DAYS_OF_WEEK, "title": "time (day)", "axis": {"grid": true}};
 	const colorEncoding = {"field": "activity", "type": "nominal", "title": "Activity type"};
 	// graph 2
 	distance_vis_spec = {
