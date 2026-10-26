@@ -33,6 +33,13 @@ function parseTweets(runkeeper_tweets) {
 	})
 
 	const meanByType = {};
+
+	function mean(values) {
+		if (values.length === 0) {
+			return 0;
+		}
+		return values.reduce(function(sum, value) {return sum + value;}, 0) / values.length;
+	}
 	topThree.forEach(function(type) {
 		meanByType[type] = mean(distanceData.filter(function(row) { return row.activity == type; })
 			.map(function(row) { return row.distance;}));
