@@ -68,7 +68,13 @@ class Tweet {
             return "unknown";
         }
         //TODO: parse the activity type from the text of the tweet
-        return "";
+        const cleaned = this.text.replace(/#runkeeper/gi, "").replace(/https?:\/\/\S+/g, "").replace(/\s+/g, " ").trim();
+        const match = cleaned.match(/^(?:Just (?:completed|posted)|Completed) an? .+?(?: workout)?(?= in \d| with @?Runkeeper| - | -$| @|$)(.*)$/i);
+        if (match === null) {
+            return "unknown";
+        }
+        //drops the '-'
+        return match[1].trim();
     }
 
     get distance():number {

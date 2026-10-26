@@ -10,6 +10,21 @@ function parseTweets(runkeeper_tweets) {
 	});
 
 	//TODO: create a new array or manipulate tweet_array to create a graph of the number of tweets containing each type of activity.
+	const completed = tweety_array.filter(function(tweet) { return tweet.source == 'completed_event' && tweet.activityType != 'unknown'; });
+
+	const counts = {};
+	completed.forEach(function(tweet) {
+		counts[tweet.activityType] = (counts[tweet.activityType] || 0) + 1;
+	});
+
+	const sortedTypes = Object.keys(counts).sort(function(a,b) { return counts[b] - counts[a];});
+	const topThree = sortedTypes.slice(0,3);
+
+	document.getElementById('numberActivities').innerText = sortedTypes.length;
+	document.getElementById('firstMost').innerText = topThree[0];
+	document.getElementById('secondMost').innerText = topThree[1];
+	document.getElementById('thirdMost').innerText = topThree[2];
+	
 
 	activity_vis_spec = {
 	  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
