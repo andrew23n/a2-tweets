@@ -55,13 +55,23 @@ function parseTweets(runkeeper_tweets) {
 
 	document.getElementById('weekdayOrWeekendLonger').innerText = weekendMean > weekDayMean ? 'weekends' : 'weekdays';
 
+
+	const activityCounts = sortedTypes.map(function(type) {
+		return {activity: type, count: counts[type]};
+	});
 	activity_vis_spec = {
 	  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
 	  "description": "A graph of the number of Tweets containing each type of activity.",
 	  "data": {
-	    "values": tweet_array
-	  }
+	    "values": activityCounts
+	  },
 	  //TODO: Add mark and encoding
+	  "mark": "bar",
+	  "encoding": {
+		"x": {"field": "activity", "type": "nominal", "sort": "-y", "title": "Activity type", "axis": {"labelAngle":-45}},
+		"y":{"field":"count","type":"quantitative","title":"Number of Tweets"},
+		"tooltip": [{"field":"activity", "title":"Activity"},{"field":"count","title":"Tweets"}]
+	  }
 	};
 	vegaEmbed('#activityVis', activity_vis_spec, {actions:false});
 
