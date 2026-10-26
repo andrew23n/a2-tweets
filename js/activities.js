@@ -53,7 +53,7 @@ function parseTweets(runkeeper_tweets) {
 	const weekendMean = mean(distanceData.filter(isWeekend).map(function(row) {return row.distance;}));
 	const weekDayMean = mean(distanceData.filter(function(row) {return !isWeekend(row);}).map(function(row) {return row.distance;}));
 
-	document.getElementById('weekdayOrWeekendLonger').innerText = weekendMean > weekdayMean ? 'weekends' : 'weekdays';
+	document.getElementById('weekdayOrWeekendLonger').innerText = weekendMean > weekDayMean ? 'weekends' : 'weekdays';
 
 	activity_vis_spec = {
 	  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
