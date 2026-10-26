@@ -100,7 +100,7 @@ function parseTweets(runkeeper_tweets) {
 	distance_vis_spec = {
 	  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
 	  "description": "Distance of each activity by day of the week.",
-	  "width": 300,
+	  "width": 200,
 	  "data": {
 	    "values": distanceData
 	  },
@@ -116,6 +116,7 @@ function parseTweets(runkeeper_tweets) {
 	distance_vis_aggregated_spec = {
 	  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
 	  "description": "Mean distance of each activity type by day of the week.",
+	  "width": 200,
 	  "data": {
 	    "values": distanceData
 	  },
