@@ -25,6 +25,21 @@ function parseTweets(runkeeper_tweets) {
 	document.getElementById('secondMost').innerText = topThree[1];
 	document.getElementById('thirdMost').innerText = topThree[2];
 	
+	const topThreeTweets = completed.filter(function(tweet) {
+		return topThree.includes(tweet.activityType);
+	});
+	const distanceData = topThreeTweets.map(function(tweet) {
+		return {activity: tweet.activityType, day: tweet.time.toLocaleDateString('en-US', {weekday: 'short' }), distance: tweet.distance };
+	})
+
+	const meanByType = {};
+	topThree.forEach(function(type) {
+		meanByType[type] = mean(distanceData.filer(function(row) { return row.activity == type; }).map(function(row) { return row.distance;}));
+	});
+	const byLength = topThree.slice().sort(function(a,b) {return meanByType[b] - meanByType[a];});
+
+	document.getElementById('longestActivityType').innerText = byLength[0];
+	document.getElementById('shortestActivityType').innerText = byLength[byLength.length -1]
 
 	activity_vis_spec = {
 	  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
